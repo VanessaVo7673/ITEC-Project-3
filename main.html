@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Catch The Fruit</title>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<div style="position:relative;height:100vh;">
+		<div class="center">
+			<canvas id="gameCanvas" width="800" height="600"></canvas>
+		</div>
+
+		<div id="loading" class="overlay">
+			<div class="panel">
+				<h1>Catch The Fruit</h1>
+				<p>Use your mouse or arrow keys to move the basket left and right. Catch fruits to score points.</p>
+			<p class="small">Scoring:</p>
+			<p style="font-size:16px;line-height:1.8;margin:6px 0">
+                    🍓 Strawberry = 2 pts<br>
+                    🫐 Blueberry = 1 pt<br>
+                    🥕 Carrot = 3 pts<br>
+                    🍌 Banana = 4 pts<br>
+                    🍏 Apple = 5 pts</p>
+				<p class="small">You start with 3 lives. Miss a fruit and lose a life. Game ends when lives reach 0.</p>
+				<button id="startBtn">Start Game</button>
+			</div>
+		</div>
+
+		<div id="gameOver" class="overlay" style="display:none">
+			<div class="panel">
+				<h1>Game Over</h1>
+				<p id="finalScore">Your score: 0</p>
+				<p>Would you like to play again?</p>
+				<div style="display:flex;gap:10px;justify-content:center">
+					<button id="playAgain">Play Again</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="hud" id="hud">
+			<div>Score: <span id="score">0</span></div>
+			<div class="small">Lives: <span id="lives">3</span></div>
+		</div>
+
+		<div class="bottom-hud" id="bottomHud">
+			<div class="small">Move with mouse or ← → keys</div>
+		</div>
+	</div>
+
+	<script src="main.js"></script>
+</body>
+</html>
