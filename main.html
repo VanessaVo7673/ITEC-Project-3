@@ -1,54 +1,141 @@
 <!doctype html>
 <html lang="en">
 <head>
+	<!-- Character encoding for proper text display -->
 	<meta charset="utf-8" />
+	<!-- Viewport settings for responsive design on mobile devices -->
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>Catch The Fruit</title>
+	<!-- Google Font for playful, fun typography -->
+	<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+	<!-- Main stylesheet -->
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<div style="position:relative;height:100vh;">
-		<div class="center">
-			<canvas id="gameCanvas" width="800" height="600"></canvas>
+	<!-- Main layout container -->
+	<div class="main-layout">
+		<!-- Left side: Info sections -->
+		<div class="left-side">
+			<!-- Credits Section -->
+			<section class="info-section">
+				<div class="info-container">
+					<h2>Credits</h2>
+					<div class="credits-content">
+						<div class="credit-block">
+							<h3>Developer</h3>
+							<ul>
+								<li>Vanessa Vo</li>
+							</ul>
+						</div>
+						<div class="credit-block">
+							<h3>External Resources</h3>
+							<ul>
+								<li>Font: Bubblegum Sans by Google Fonts</li>
+								<li>Fruit Sprites: Drawn by Vanessa Vo in Pixlr</li>
+								<li>Basket Sprite: Drawn by Vanessa Vo in Pixlr</li>
+							</ul>
+						</div>
+						<div class="credit-block">
+							<h3>Development Tools</h3>
+							<ul>
+								<li>Editor: Visual Studio Code</li>
+								<li>Languages: HTML5, CSS3, JavaScript</li>
+								<li>API: HTML5 Canvas</li>
+								<li>Web Hosting: Github</li>
+								<li>Visuals: Pixlr</li>
+								<li>Testing: Google Chrome</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Demo Video Section -->
+			<section class="info-section">
+				<div class="info-container">
+					<h2>Demo Video</h2>
+					<div class="video-container">
+						<!-- Demo video player -->
+						<video width="100%" controls>
+							<source src="./Fruits/demo video.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+					</div>
+				</div>
+			</section>
+
+			<!-- Screenshots Section -->
+			<section class="info-section">
+				<div class="info-container">
+					<h2>Screenshots</h2>
+					<div class="screenshots-grid">
+						<!-- Add your screenshot images here -->
+						<div class="screenshot-placeholder">
+							<p>Screenshot 1</p>
+						</div>
+						<div class="screenshot-placeholder">
+							<p>Screenshot 2</p>
+						</div>
+						<div class="screenshot-placeholder">
+							<p>Screenshot 3</p>
+						</div>
+					</div>
+				</div>
+			</section>
 		</div>
 
+		<!-- Right side: Game canvas -->
+		<div class="right-side">
+			<div style="position:relative;min-height:100vh;">
+				<!-- Canvas container: centers the game canvas -->
+				<div class="center">
+					<!-- Game canvas where all gameplay graphics are drawn -->
+					<canvas id="gameCanvas" width="800" height="600"></canvas>
+				</div>
+
+		<!-- Start screen overlay: shows game instructions and start button -->
 		<div id="loading" class="overlay">
 			<div class="panel">
 				<h1>Catch The Fruit</h1>
+				<!-- Game instructions -->
 				<p>Use your mouse or arrow keys to move the basket left and right. Catch fruits to score points.</p>
-			<p class="small">Scoring:</p>
+			<!-- Scoring system explanation -->
 			<p style="font-size:16px;line-height:1.8;margin:6px 0">
                     🍓 Strawberry = 2 pts<br>
                     🫐 Blueberry = 1 pt<br>
                     🥕 Carrot = 3 pts<br>
                     🍌 Banana = 4 pts<br>
                     🍏 Apple = 5 pts</p>
+				<!-- Lives system explanation -->
 				<p class="small">You start with 3 lives. Miss a fruit and lose a life. Game ends when lives reach 0.</p>
+				<!-- Control instructions -->
+				<p class="small">Move with mouse or ← → keys</p>
+				<!-- Start button -->
 				<button id="startBtn">Start Game</button>
 			</div>
 		</div>
 
+		<!-- Game over overlay: hidden by default, shown when player loses all lives -->
 		<div id="gameOver" class="overlay" style="display:none">
 			<div class="panel">
 				<h1>Game Over</h1>
+				<!-- Final score display (updated by JavaScript) -->
 				<p id="finalScore">Your score: 0</p>
 				<p>Would you like to play again?</p>
 				<div style="display:flex;gap:10px;justify-content:center">
+					<!-- Restart button -->
 					<button id="playAgain">Play Again</button>
 				</div>
 			</div>
 		</div>
 
+		<!-- HUD (Heads-Up Display): shows current score and lives during gameplay -->
 		<div class="hud" id="hud">
 			<div>Score: <span id="score">0</span></div>
 			<div class="small">Lives: <span id="lives">3</span></div>
 		</div>
-
-		<div class="bottom-hud" id="bottomHud">
-			<div class="small">Move with mouse or ← → keys</div>
-		</div>
 	</div>
 
+	<!-- Main game logic script -->
 	<script src="main.js"></script>
 </body>
 </html>

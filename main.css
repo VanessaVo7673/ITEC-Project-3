@@ -1,27 +1,99 @@
+/*base styles: scrollable layout with playful font and light blue background*/
 html,body{
-    height:100%;
     margin:0;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:'Bubblegum Sans','Comic Sans MS',cursive,sans-serif;
     background:#f0f6f8
 }
 
+/*navigation bar styling*/
+.navbar{
+    background:#0b79d0;
+    padding:15px 0;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.nav-container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.nav-title{
+    color:white;
+    margin:0;
+    font-size:24px;
+}
+
+.nav-links{
+    list-style:none;
+    display:flex;
+    gap:30px;
+    margin:0;
+    padding:0;
+}
+
+.nav-links a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    padding:8px 16px;
+    border-radius:5px;
+    transition:background 0.3s;
+}
+
+.nav-links a:hover{
+    background:rgba(255,255,255,0.2);
+}
+
+.nav-links a.active{
+    background:rgba(255,255,255,0.3);
+    font-weight:700;
+}
+
+/*content wrapper for centered layout*/
+.content-wrapper{
+    max-width:1000px;
+    margin:0 auto;
+    padding:40px 20px;
+}
+
+/*game page layout*/
+.game-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:calc(100vh - 80px);
+    padding:40px 20px;
+}
+
+/*center container: uses flexbox to center canvas vertically and horizontally*/
 .center{
     display:flex;
     align-items:center;
     justify-content:center;
-    height:100%
+    min-height:600px;
 }
+/*canvas styling: sky-blue gradient background with rounded corners and shadow*/
 canvas{
     background:linear-gradient(#b3e5fc,#e1f5fe);
     border-radius:10px;
     box-shadow:0 8px 30px rgba(0,0,0,0.15)
 }
+/*overlay: full-screen layer for start screen and game over screen*/
 .overlay{
     position:absolute;
     inset:0;display:flex;
-    align-items:center;
+    align-items:flex-start;
+    padding-top:150px;
     justify-content:center
 }
+/*panel: white card with rounded corners for menus and messages*/
 .panel{
     background:white;
     padding:20px 24px;
@@ -32,16 +104,19 @@ canvas{
     text-align:center;
 }
 
+/*heading style: compact spacing and moderate size*/
 h1{
     Margin:0 0 8px;
     font-size:22px;
 }
 
+/*paragraph style: consistent spacing and dark gray text*/
 p{
     margin:8px 0;
     color:#333;
 }
 
+/*button style: blue background with white text, rounded corners, hover cursor*/
 button{
     margin-top:12px;
     padding:10px 16px;
@@ -51,10 +126,11 @@ button{
     cursor:pointer;
 }
 
+/*hud (heads-up display): centered at top, semi-transparent white background*/
 .hud{
     position:absolute;
     left:50%;
-    top:12px;
+    top:70px;
     transform:translateX(-50%);
     background:rgba(255,255,255,0.95);
     padding:12px 18px;
@@ -68,10 +144,12 @@ button{
     font-size:18px;
 }
 
+/*hud labels: bold font weight*/
 .hud div{
     font-weight:800;
 }
 
+/*hud values (score/lives numbers): larger, bolder, with minimum width*/
 .hud span{
     font-size:22px;
     font-weight:900;
@@ -79,22 +157,159 @@ button{
     min-width:56px;
 }
 
+/*bottom hud: positioned at bottom-center below canvas, shows control hints*/
 .bottom-hud{
     position:absolute;
-    right:16px;
-    top:16px;
+    left:50%;
+    bottom:16px;
+    transform:translateX(-50%);
     background:rgba(255,255,255,0.9);
     padding:8px 12px;
     border-radius:8px;
 }
 
+/*small text style: used for secondary information and hints*/
 .small{
     font-size:13px;
     font-weight:500;
     color:#555;
 }
 
+/*mobile responsive: scale canvas to fit smaller screens*/
 @media (max-width:600px){
     canvas{width:94vw;height:64vh};
     }
+
+/*info sections: styling for credits, video, and screenshots below the game*/
+.info-section{
+    padding:15px 20px;
+    background:#fff;
+    border-radius:10px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+/*container for info section content with max width*/
+.info-container{
+    max-width:100%;
+    padding:0 20px;
+    margin:0 auto;
+}
+
+/*section headings: larger blue titles*/
+.info-section h2{
+    font-size:28px;
+    margin:0 0 15px;
+    color:#0b79d0;
+    text-align:center;
+}
+
+/*subsection headings*/
+.info-section h3{
+    font-size:20px;
+    margin:16px 0 8px;
+    color:#333;
+}
+
+/*credits layout: vertical stacking for developer on top*/
+.credits-content{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+/*individual credit blocks for team members and external resources*/
+.credit-block{
+    flex:1;
+    min-width:250px;
+    text-align:center;
+}
+
+/*credit list styling: remove default bullets and center*/
+.credit-block ul{
+    list-style:none;
+    padding:0;
+    margin:8px auto;
+    text-align:center;
+}
+
+/*credit list items with spacing*/
+.credit-block li{
+    padding:6px 0;
+    color:#555;
+}
+
+/*video container: centered demo video display*/
+.video-container{
+    text-align:center;
+    position:relative;
+}
+
+/*video iframe styling: responsive with rounded corners*/
+.video-container iframe,
+.video-container video{
+    max-width:100%;
+    width:700px;
+    border-radius:10px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+/*placeholder text for missing video*/
+.placeholder-text{
+    color:#999;
+    font-style:italic;
+    margin-top:10px;
+}
+
+/*screenshots grid: responsive grid layout for game screenshots*/
+.screenshots-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:15px;
+    margin-top:10px;
+}
+
+/*screenshot images: responsive with rounded corners*/
+.screenshot-img{
+    width:100%;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    transition:transform 0.3s;
+}
+
+.screenshot-img:hover{
+    transform:scale(1.05);
+}
+
+/*screenshot placeholder: dashed border boxes for future images*/
+.screenshot-placeholder{
+    aspect-ratio:16/9;
+    background:#f0f0f0;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px dashed #ccc;
+}
+
+/*placeholder text styling*/
+.screenshot-placeholder p{
+    color:#999;
+}
+
+/*background transitions for gameplay: changes canvas background based on score*/
+/*level 1: blue sky (0-24 points)*/
+.bg-level-1{
+    background:linear-gradient(#b3e5fc,#e1f5fe) !important;
+}
+
+/*level 2: orange sunset (25-49 points)*/
+.bg-level-2{
+    background:linear-gradient(#ffccbc,#ffe0b2) !important;
+}
+
+/*level 3: green nature (50+ points)*/
+.bg-level-3{
+    background:linear-gradient(#c8e6c9,#dcedc8) !important;
+}
 
