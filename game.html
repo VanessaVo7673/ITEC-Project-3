@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<!--navigation bar-->
+	<!--nav bar-->
 	<nav class="navbar">
 		<div class="nav-container">
 			<h1 class="nav-title">Falling Fruits</h1>
@@ -22,49 +22,42 @@
 	<!--game container-->
 	<div class="game-page">
 		<div style="position:relative;">
-			<!--canvas container: centers the game canvas-->
+			<!--canvas-->
 			<div class="center">
-				<!--game canvas where all gameplay graphics are drawn-->
 				<canvas id="gameCanvas" width="1200" height="800"></canvas>
 			</div>
 
-			<!--start screen overlay: shows game instructions and start button-->
+			<!--start screen-->
 			<div id="loading" class="overlay">
 				<div class="panel">
 					<h1>Falling Fruits</h1>
-					<!--game instructions-->
 					<p>Use your mouse or arrow keys to move the basket left and right. Catch fruits to score points.</p>
-				<!--scoring system explanation-->
+				<!--scoring system-->
 				<p style="font-size:16px;line-height:1.8;margin:6px 0">
 					🍓 Strawberry = 2 pts<br>
 					🫐 Blueberry = 1 pt<br>
 					🥕 Carrot = 3 pts<br>
 					🍌 Banana = 4 pts<br>
 					🍏 Apple = 5 pts</p>
-					<!--lives system explanation-->
 					<p class="small">You start with 3 lives. Miss a fruit and lose a life. Game ends when lives reach 0.</p>
-					<!--control instructions-->
-					<p class="small">Move with mouse or ← → keys</p>
 					<!--start button-->
 					<button id="startBtn">Start Game</button>
 				</div>
 			</div>
 
-			<!--game over overlay: hidden by default, shown when player loses all lives-->
+			<!--game over screen-->
 			<div id="gameOver" class="overlay" style="display:none">
 				<div class="panel">
 					<h1>Game Over</h1>
-					<!--final score display (updated by JavaScript)-->
 					<p id="finalScore">Your score: 0</p>
 					<p>Would you like to play again?</p>
 					<div style="display:flex;gap:10px;justify-content:center">
-						<!--restart button-->
 						<button id="playAgain">Play Again</button>
 					</div>
 				</div>
 			</div>
 
-			<!--hud (heads-up display): shows current score and lives during gameplay-->
+			<!--hud-->
 			<div class="hud" id="hud">
 				<div>Score: <span id="score">0</span></div>
 				<div class="small">Lives: <span id="lives">3</span></div>
@@ -72,7 +65,6 @@
 		</div>
 	</div>
 
-	<!--main game logic script-->
 	<script src="main.js"></script>
 </body>
 </html>

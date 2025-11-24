@@ -118,58 +118,55 @@ function startGame(){
     requestAnimationFrame(loop);
 }
 
-//end the game and show final score
+//ending game & showing final score
 function endGame(){
     running = false; //stop game loop
     finalScoreEl.textContent = 'Your score: ' + score;
     gameOverEl.style.display = 'flex'; //show game over screen
 }
 
-//update game logic each frame (dt = delta time in milliseconds)
+//updating game logic
 function update(dt){
     //fruit spawning and difficulty progression
     spawnTimer += dt;
     difficultyTimer += dt;
-    //every 8 seconds, increase difficulty by spawning fruits faster
+    //increasing difficulty (every 9 secs) by spawning fruits faster
     if(difficultyTimer > 8000){
-        spawnInterval = Math.max(300, spawnInterval - 80); //min 300ms between spawns
+        spawnInterval = Math.max(300, spawnInterval - 80); 
         difficultyTimer = 0;
     }
-    //spawn a new fruit when timer exceeds spawn interval
+    //spawning a new fruit when timer exceeds spawn interval
     if(spawnTimer > spawnInterval){ spawnFruit(); spawnTimer = 0; }
 
-    //change background based on score
+    //changing background based on score
     if(score >= 50 && !canvas.classList.contains('bg-level-3')){
         canvas.className = 'bg-level-3'; //green background at high score
     } else if(score >= 25 && !canvas.classList.contains('bg-level-2') && score < 50){
         canvas.className = 'bg-level-2'; //orange background at medium score
     }
 
-    //update each falling fruit
-    //loop backwards so we can safely remove fruits
+    //updating each falling fruit
     for(let i=fruits.length-1;i>=0;i--){
         const f = fruits[i];
-        //move fruit down based on its fall speed
         f.y += f.fallSpeed * (dt/1000);
         
-        //animate sprite frames (alternates every 500ms)
+        //animating sprite frames
         f.frameTimer += dt;
         if(f.frameTimer > 500){
             f.frameIndex = (f.frameIndex + 1) % f.frames;
             f.frameTimer = 0;
         }
 
-        //check if basket caught the fruit
-        //collision detection: check if fruit overlaps with basket
+        //checking if basket caught the fruit
         if(f.y + f.size >= basket.y && f.y <= basket.y + basket.h){
             if(f.x + f.size > basket.x && f.x < basket.x + basket.w){
-                score += f.value; //add fruit's point value to score
+                score += f.value;
                 scoreEl.textContent = score;
-                fruits.splice(i,1); //remove caught fruit
+                fruits.splice(i,1); //removing caught fruit
                 continue;
             }
         }
-        //fruit fell past the bottom - player missed it
+        //if fruit fell past the bottom
         if(f.y > canvas.height + 40){
             fruits.splice(i,1); //remove fruit
             lives--; //lose a life
@@ -179,32 +176,30 @@ function update(dt){
     }
 }
 
-//render all game objects to the canvas
+//rendering all game objects
 function draw(){
-    //clear canvas for new frame
+    //clearing canvas
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    //draw the basket (use image if loaded, otherwise draw placeholder)
+    //drawing the basket
     if(images.basket && images.basket.complete){
-        //draw basket sprite
         ctx.drawImage(images.basket, basket.x, basket.y, basket.w, basket.h);
     } else {
-        //fallback: draw brown rectangle with text while image loads
+        //drawing brown rectangle with text while image loads
         ctx.fillStyle = '#8b5e3c';
         ctx.fillRect(basket.x, basket.y, basket.w, basket.h);
         ctx.fillStyle='white'; ctx.font='18px sans-serif'; ctx.textAlign='center';
         ctx.fillText('BASKET', basket.x + basket.w/2, basket.y + basket.h/2 + 6);
     }
 
-    //draw each falling fruit
+    //drawing each falling fruit
     for(const f of fruits){
         if(f.img && f.img.complete){
-            //extract the correct animation frame from vertical spritesheet
             const frameHeight = f.img.height / f.frames;
-            const srcY = f.frameIndex * frameHeight; //y offset for current frame
+            const srcY = f.frameIndex * frameHeight;
             ctx.drawImage(f.img, 0, srcY, f.img.width, frameHeight, f.x, f.y, f.size, f.size);
         } else {
-            //fallback: draw grey circle while sprite loads
+            //drawing grey circle while sprite loads
             ctx.fillStyle = '#ccc';
             ctx.beginPath();
             ctx.arc(f.x + f.size/2, f.y + f.size/2, f.size/2, 0, Math.PI*2);
@@ -213,69 +208,66 @@ function draw(){
     }
 }
 
-//main game loop: called every frame by requestAnimationFrame
+//game looping
 function loop(ts){
-    if(!running) return; //stop if game is paused
-    const dt = ts - lastTime; //calculate time since last frame
+    if(!running) return; //stopping if game is paused
+    const dt = ts - lastTime;
     lastTime = ts;
     try {
-        update(dt); //update game state
-        draw(); //render to canvas
+        update(dt);
+        draw();
     } catch (err) {
         console.error('Error in game loop:', err);
     }
-    requestAnimationFrame(loop); //schedule next frame
+    requestAnimationFrame(loop);
 }
 
-//keyboard controls: track which keys are currently pressed
+//keyboard controls
 let keys = {};
 window.addEventListener('keydown', e=>{keys[e.key]=true;});
 window.addEventListener('keyup', e=>{keys[e.key]=false;});
 
-//handle keyboard input: separate loop for smooth movement at 60 FPS
+//keyboard input
 function controlTick(){
-    if(!running) return; //only process input during active game
+    if(!running) return; //only processing input during active game
     let moved = false;
-    //move basket left with arrow keys or 'A' key
+    //moving basket left with arrow key <- or 'A' key
     if(keys['ArrowLeft'] || keys['a']){ basket.x -= basket.speed * (1/60); moved = true; }
-    //move basket right with arrow keys or 'D' key
+    //moving right with arrow key -> or 'D' key
     if(keys['ArrowRight'] || keys['d']){ basket.x += basket.speed * (1/60); moved = true; }
-    //keep basket within canvas bounds
+    //keeping basket within canvas bounds
     basket.x = Math.max(8, Math.min(canvas.width - basket.w - 8, basket.x));
-    requestAnimationFrame(controlTick); //continue input loop
+    requestAnimationFrame(controlTick); //continuing input loop
 }
 
-//mouse controls: move basket to follow cursor
+//mouse controls
 canvas.addEventListener('mousemove', e=>{
     const rect = canvas.getBoundingClientRect();
     const mx = e.clientX - rect.left; //get mouse X relative to canvas
-    basket.x = mx - basket.w/2; //center basket on cursor
-    basket.x = Math.max(8, Math.min(canvas.width - basket.w - 8, basket.x)); //clamp to bounds
+    basket.x = mx - basket.w/2; //centering basket on cursor
+    basket.x = Math.max(8, Math.min(canvas.width - basket.w - 8, basket.x)); //clamping to bounds
 });
 
 //ui button event listeners
 startBtn.addEventListener('click', ()=>{ startGame(); controlTick(); }); //start game button
 playAgainBtn.addEventListener('click', ()=>{ startGame(); controlTick(); }); //play again button
 
-//handle canvas resizing for high-DPI displays (Retina, 4K, etc.)
+//handling canvas resizing
 function resizeCanvas(){
-    const ratio = window.devicePixelRatio || 1; //get display pixel density
+    const ratio = window.devicePixelRatio || 1; //getting display pixel density
     const w = canvas.clientWidth || canvas.width;
     const h = canvas.clientHeight || canvas.height;
-    //scale canvas resolution to match physical pixels
+    //scaling canvas resolution to match physical pixels
     canvas.width = w * ratio;
     canvas.height = h * ratio;
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     ctx.setTransform(ratio,0,0,ratio,0,0); //scale drawing context
-    //reposition basket at bottom of canvas
+    //repositioning basket at bottom of canvas
     basket.y = (canvas.height/ratio) - (basket.h + 20);
 }
 
-//listen for window resize events
 window.addEventListener('resize', resizeCanvas);
-//initialize canvas on page load
 resizeCanvas();
 
-//expose startGame function for debugging in browser console
 window.startGame = startGame;
